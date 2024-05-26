@@ -52,8 +52,92 @@ header button{
     cursor: pointer;
     background: none;
     border: none;
-    left: 1360px;
-    top: 95px;
+    bottom: 10px;
+    right: 05px;
+}
+
+.formClass{
+    position: relative;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 45%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.dialogClass {
+    position: absolute;
+    width: 500px;
+    height: 200px;
+    padding: 20px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dialog-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.divParent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2px;
+}
+
+.divParent1, .divParent2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 100px;
+}
+
+.form-row label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-row select{
+    width: 180%;
+    height: 33px;
+    padding-left: 5px;
+    font-weight: bold;
+}
+
+.date{
+    width: 172.5%;
+    height: 35px;
+    padding-left: 5px;
+    font-weight: bold;
 }
 
 header svg{
@@ -61,4 +145,18 @@ header svg{
     position: absolute;
     top: 95px;
     right: 10px;
+}
+
+#cancel-dialog{
+    position: absolute;
+    cursor: pointer;
+    background-color: white;
+    border: 0;
+    top: -15px;
+    margin: 5px;
+    right: -140px;
+}
+
+#edit-dialog{
+    position: absolute;
 }
