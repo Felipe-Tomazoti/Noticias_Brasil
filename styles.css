@@ -158,5 +158,13 @@ header svg{
 }
 
 #edit-dialog{
+    border: none;
+    width: 128%;
+    height: 35px;
+    left: 1px;
     position: absolute;
+    background-color: #4682b4;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
 }
