@@ -9,13 +9,11 @@ body{
 }
 
 main{
-    padding: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     background-color: #f0f0f0;
-    max-width: 100ch;
 }
 
 header, footer{
@@ -60,7 +58,7 @@ header button{
     position: relative;
 }
 
-.edit-form {
+#edit-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -167,4 +165,52 @@ header svg{
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     cursor: pointer;
+}
+
+.flex{
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.flexColumn{
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    justify-content: space-between;
+}
+
+#ulCards{
+    display: flex;
+    flex-direction: column;
+}
+
+.liCards{
+    display: flex;
+    flex-direction: row;
+    max-width: 120ch;
+    padding: 20px;
+    border-bottom: 1px solid gray;
+    height: 230px;
+}
+
+.buttonRelease{
+    background-color: #cfcfcf;
+    color: #000;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.imgClass{
+    height: auto;
+    width: 300px;
+    padding-right: 10px;
+}
+
+.titleAndIntroAlignStart {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
