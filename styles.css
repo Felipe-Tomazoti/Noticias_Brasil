@@ -69,7 +69,7 @@ header button{
     transform: translate(-50%, -50%);
 }
 
-.dialogClass {
+#dialogClass {
     position: absolute;
     width: 500px;
     height: 200px;
@@ -82,7 +82,7 @@ header button{
     transform: translate(-50%, -50%);
 }
 
-.dialog-wrapper {
+.dialog-wrapper.show {
     position: fixed;
     top: 0;
     left: 0;

@@ -12,8 +12,8 @@
     <header>
         <h1>Portal de Notícias do IBGE</h1>
 
-        <form onsubmit=filtersApplication(event) class="formClass" action="">
-            <input type="text" name="text" id="text" placeholder="Buscar notícia por termo"></input>
+        <form onsubmit="filtersApplication(event)" class="formClass" action="">
+            <input type="text" name="text" id="text" placeholder="Buscar notícia por termo">
             <button type="submit">🔍</button>
         </form>
 
@@ -21,15 +21,54 @@
             xmlns="http://www.w3.org/2000/svg" class="svgClass">
             <path d="m 0,0 30,45 0,30 10,15 0,-45 30,-45 Z"></path>
         </svg>
-
     </header>
 
     <main>
-
         <div class="singleCard">
             <ul id="ulCards"></ul>
         </div>
 
+        <div class="dialog-wrapper">
+            <dialog id="dialogClass">
+                <form id="edit-form">
+                    <div class="divParent">
+                        <div class="divParent1">
+                            <div class="form-row">
+                                <label>Tipo:</label>
+                                <select id="tipo">
+                                    <option value="default">Selecione</option>
+                                    <option value="noticia">Notícia</option>
+                                    <option value="release">Release</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label>Quantidade:</label>
+                                <select id="quantidade">
+                                    <option value="5">5</option>
+                                    <option value="10" selected>10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="divParent2">
+                            <div class="form-row">
+                                <label>De:</label>
+                                <input class="date" type="date" id="de" />
+                            </div>
+                            <div class="form-row">
+                                <label>Até:</label>
+                                <input class="date" type="date" id="ate" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttonClass">
+                        <button type="submit" id="edit-dialog">Aplicar</button>
+                        <button type="button" id="cancel-dialog">Cancelar</button>
+                    </div>
+                </form>
+            </dialog>
+        </div>
     </main>
 
     <footer>
@@ -37,7 +76,6 @@
     </footer>
 
     <script src="./scripts.js"></script>
-
 </body>
 
 </html>

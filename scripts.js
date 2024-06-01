@@ -1,53 +1,83 @@
 const valueBusca = document.getElementById('text');
+const tipo = document.getElementById('tipo');
+const quantidade = document.getElementById('quantidade');
+const de = document.getElementById('de');
+const ate = document.getElementById('ate');
 
-addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     clickSvg();
+    setFilters();
     callApi();
 });
 
 // FUNÇÕES
 
 // CHAMAR AS INFOS
-async function callData(){
-    const req = await fetch(`https://servicodados.ibge.gov.br/api/v3/noticias?qtd=5`); //${window.location.search}
-    const data = await req.json({});
+async function callData() {
+    const req = await fetch(`https://servicodados.ibge.gov.br/api/v3/noticias/${window.location.search}`);
+    const data = await req.json();
     return data;
 }
 
 // TEM QUE RETORNAR COM A URL E OS PARAMS.
-function setFilters(){
+function setFilters() {
+    const newUrl = new URL(window.location);
+    valueBusca.value = newUrl.searchParams.get('busca') ?? '';
+    tipo.value = newUrl.searchParams.get('tipo') ?? 'default';
+    quantidade.value = newUrl.searchParams.get('qtd') ?? '10';
+    de.value = newUrl.searchParams.get('de') ?? '';
+    ate.value = newUrl.searchParams.get('ate') ?? '';
+}
 
+function updateURLParams() {
+    const newUrl = new URL(window.location);
+    newUrl.searchParams.set('qtd', quantidade.value);
+    
+    if (tipo.value !== 'default') {
+        newUrl.searchParams.set('tipo', tipo.value);
+    } else {
+        newUrl.searchParams.delete('tipo');
+    }
+    
+    if (de.value !== '') {
+        newUrl.searchParams.set('de', de.value);
+    } else {
+        newUrl.searchParams.delete('de');
+    }
+    
+    if (ate.value !== '') {
+        newUrl.searchParams.set('ate', ate.value);
+    } else {
+        newUrl.searchParams.delete('ate');
+    }
+
+    window.history.pushState({}, '', newUrl);
 }
 
 //ESTRUTURA DOS CARDS
 async function callApi() {
     const ul = document.getElementById('ulCards')
-    const filters = setFilters();
-    //PASSAR OS "filters" como parametro do callData()
+    updateURLParams();
     const data = await callData();
     try {
-        
         let cards = "";
 
-
         data.items.forEach(element => {
-            
             const titulo = element.titulo;
             const introducao = element.introducao;
             const editorias = '#' + element.editorias;
             const link = element.link;
-            const img = `https://agenciadenoticias.ibge.gov.br/` + JSON.parse(!!element.imagens ? element.imagens : '{"image":{"image_intro": ""}}').image_intro;
+            const img = `https://agenciadenoticias.ibge.gov.br/` + JSON.parse(element.imagens || '{"image_intro": ""}').image_intro;
             const data_publicacao = converter(element.data_publicacao);
 
             cards += `
             <li class="liCards">
-                <img src="${img}"    
-                    alt="" class="imgClass">
+                <img src="${img}" alt="" class="imgClass">
                 <div class="flexColumn">
-                <div class="titleAndIntroAlignStart">
-                    <h2>${titulo}</h2>
-                    <p class="introducao">${introducao}</p>
-                </div>
+                    <div class="titleAndIntroAlignStart">
+                        <h2>${titulo}</h2>
+                        <p class="introducao">${introducao}</p>
+                    </div>
                     <div class="flex">
                         <p class="editorias">${editorias}</p>
                         <p class="data_publicacao">${data_publicacao}</p>
@@ -56,25 +86,21 @@ async function callApi() {
                 </div>
             </li>
             `
-
         });
-        ul.innerHTML=cards;
-
+        ul.innerHTML = cards;
     } catch (error) {
-        console.log(error)
+        console.error(error);
     }
 }
 
-function callLink(link){
+function callLink(link) {
     window.open(link, '_blank');
 }
 
-async function filtersApplication(event){
+async function filtersApplication(event) {
     event.preventDefault();
-    const newURL = new URL(window.location);
-    newURL.searchParams.set('busca', valueBusca.value);
-    const data = await callData(valueBusca.value);
-    // FAZER POR busca
+    updateURLParams();
+    callApi();
 }
 
 function clickSvg() {
@@ -84,7 +110,7 @@ function clickSvg() {
     });
 }
 
-function converter(data_publicacao){
+function converter(data_publicacao) {
     const [parteData, parteHora] = data_publicacao.split(' ');
     const [dia, mes, ano] = parteData.split('/').map(Number);
     const [horas, minutos, segundos] = parteHora.split(':').map(Number);
@@ -109,61 +135,16 @@ function converter(data_publicacao){
 }
 
 function openDialog() {
-    const dialogWrapper = document.createElement('div');
-    dialogWrapper.classList.add('dialog-wrapper');
-
-    const dialog = document.createElement('dialog');
-    dialog.classList.add('dialogClass');
-
-    dialog.innerHTML = `
-    <form id="edit-form">
-        <div class="divParent">
-            <div class="divParent1">
-                <div class="form-row">
-                    <label>Tipo:</label>
-                    <select>
-                        <option value="default">Selecione</option>
-                        <option value="noticia">Notícia</option>
-                        <option value="release">Release</option>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <label>Quantidade:</label>
-                    <select>
-                        <option value="5">5</option>
-                        <option value="10" selected>10</option>
-                        <option value="20">20</option>
-                    </select>
-                </div>
-            </div>
-            <div class="divParent2">
-                <div class="form-row">
-                    <label>De:</label>
-                    <input class="date" type="date" />
-                </div>
-                <div class="form-row">
-                    <label>Até:</label>
-                    <input class="date" type="date" />
-                </div>
-            </div>
-        </div>
-        <div class="buttonClass">
-            <button type="submit" id="edit-dialog">Aplicar</button>
-            <button type="button" id="cancel-dialog">Cancelar</button>
-        </div>
-    </form>
-    `;
-
-    dialogWrapper.appendChild(dialog);
-    document.body.appendChild(dialogWrapper);
-
+    tipo.value = "default";
+    const dialog = document.getElementById('dialogClass');
     dialog.showModal();
 
     document.getElementById('cancel-dialog').textContent = "✖️";
     document.getElementById('cancel-dialog').addEventListener('click', function () {
         dialog.close();
-        dialogWrapper.remove();
     });
 }
 
-
+document.getElementById('edit-form').addEventListener('submit', (event) => {
+    filtersApplication(event);
+});
