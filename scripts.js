@@ -1,3 +1,4 @@
+const dialog = document.getElementById('dialogClass');
 const valueBusca = document.getElementById('text');
 const tipo = document.getElementById('tipo');
 const quantidade = document.getElementById('quantidade');
@@ -33,24 +34,32 @@ function updateURLParams() {
     const newUrl = new URL(window.location);
     newUrl.searchParams.set('qtd', quantidade.value);
     
+    if(valueBusca.value !== ""){
+        newUrl.searchParams.set('busca', valueBusca.value);
+    } else{
+        newUrl.searchParams.delete('busca');
+    }
+
     if (tipo.value !== 'default') {
         newUrl.searchParams.set('tipo', tipo.value);
+        document.getElementById('contador').textContent = cont++;
     } else {
         newUrl.searchParams.delete('tipo');
     }
     
     if (de.value !== '') {
         newUrl.searchParams.set('de', de.value);
+        document.getElementById('contador').textContent = cont++;
     } else {
         newUrl.searchParams.delete('de');
     }
     
     if (ate.value !== '') {
         newUrl.searchParams.set('ate', ate.value);
+        document.getElementById('contador').textContent = cont++;
     } else {
         newUrl.searchParams.delete('ate');
     }
-
     window.history.pushState({}, '', newUrl);
 }
 
@@ -136,7 +145,6 @@ function converter(data_publicacao) {
 
 function openDialog() {
     tipo.value = "default";
-    const dialog = document.getElementById('dialogClass');
     dialog.showModal();
 
     document.getElementById('cancel-dialog').textContent = "✖️";
@@ -147,4 +155,5 @@ function openDialog() {
 
 document.getElementById('edit-form').addEventListener('submit', (event) => {
     filtersApplication(event);
+    dialog.close();
 });

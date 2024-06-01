@@ -1,14 +1,14 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
 
-body{
+body {
     display: grid;
     grid-template-rows: auto 1fr auto;
 }
 
-main{
+main {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,7 +16,8 @@ main{
     background-color: #f0f0f0;
 }
 
-header, footer{
+header,
+footer {
     color: white;
     padding: 15px;
     font-family: Arial, Helvetica, sans-serif;
@@ -29,23 +30,24 @@ header, footer{
     background-color: #4682b4;
 }
 
-footer{
+footer {
     font-size: 15px;
     padding: 30px;
 }
 
-header h1, header input{
+header h1,
+header input {
     margin-top: 15px;
 }
 
-header input{
+header input {
     padding: 8px;
     border: 1px;
     border-radius: 10px;
     width: 850px;
 }
 
-header button{
+header button {
     position: absolute;
     cursor: pointer;
     background: none;
@@ -54,7 +56,7 @@ header button{
     right: 05px;
 }
 
-.formClass{
+.formClass {
     position: relative;
 }
 
@@ -112,7 +114,8 @@ dialog::backdrop {
     gap: 2px;
 }
 
-.divParent1, .divParent2{
+.divParent1,
+.divParent2 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -124,28 +127,28 @@ dialog::backdrop {
     font-weight: bold;
 }
 
-.form-row select{
+.form-row select {
     width: 180%;
     height: 33px;
     padding-left: 5px;
     font-weight: bold;
 }
 
-.date{
+.date {
     width: 172.5%;
     height: 35px;
     padding-left: 5px;
     font-weight: bold;
 }
 
-header svg{
+header svg {
     cursor: pointer;
     position: absolute;
     top: 95px;
     right: 10px;
 }
 
-#cancel-dialog{
+#cancel-dialog {
     position: absolute;
     cursor: pointer;
     background-color: white;
@@ -155,7 +158,7 @@ header svg{
     right: -140px;
 }
 
-#edit-dialog{
+#edit-dialog {
     border: none;
     width: 128%;
     height: 35px;
@@ -167,24 +170,24 @@ header svg{
     cursor: pointer;
 }
 
-.flex{
+.flex {
     justify-content: space-between;
     margin-top: 10px;
 }
 
-.flexColumn{
+.flexColumn {
     display: flex;
     flex-direction: column;
     font-family: Arial, Helvetica, sans-serif;
     justify-content: space-between;
 }
 
-#ulCards{
+#ulCards {
     display: flex;
     flex-direction: column;
 }
 
-.liCards{
+.liCards {
     display: flex;
     flex-direction: row;
     max-width: 120ch;
@@ -193,7 +196,7 @@ header svg{
     height: 230px;
 }
 
-.buttonRelease{
+.buttonRelease {
     background-color: #cfcfcf;
     color: #000;
     border: none;
@@ -203,7 +206,7 @@ header svg{
     width: 100%;
 }
 
-.imgClass{
+.imgClass {
     height: auto;
     width: 300px;
     padding-right: 10px;
@@ -213,4 +216,18 @@ header svg{
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+#contador {
+    position: absolute;
+    right: 5px;
+    top: 105px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    color: black;
+    width: 10px;
+    font-size: 12px;
+    padding: 1px;
+    justify-content: center;
+    align-items: center;
 }
