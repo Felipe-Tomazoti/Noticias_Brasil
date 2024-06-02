@@ -1,3 +1,4 @@
+const cont = document.getElementById('contador');
 const dialog = document.getElementById('dialogClass');
 const valueBusca = document.getElementById('text');
 const tipo = document.getElementById('tipo');
@@ -7,6 +8,7 @@ const ate = document.getElementById('ate');
 
 document.addEventListener("DOMContentLoaded", () => {
     clickSvg();
+    console.log("teste");
     setFilters();
     callApi();
 });
@@ -24,42 +26,43 @@ async function callData() {
 function setFilters() {
     const newUrl = new URL(window.location);
     valueBusca.value = newUrl.searchParams.get('busca') ?? '';
-    tipo.value = newUrl.searchParams.get('tipo') ?? 'default';
+    tipo.value = newUrl.searchParams.get('tipo') ?? 'default'; 
     quantidade.value = newUrl.searchParams.get('qtd') ?? '10';
     de.value = newUrl.searchParams.get('de') ?? '';
     ate.value = newUrl.searchParams.get('ate') ?? '';
 }
 
 function updateURLParams() {
+    let x = 1;
     const newUrl = new URL(window.location);
     newUrl.searchParams.set('qtd', quantidade.value);
-    
-    if(valueBusca.value !== ""){
+    if (valueBusca.value !== "") {
         newUrl.searchParams.set('busca', valueBusca.value);
-    } else{
+    } else {
         newUrl.searchParams.delete('busca');
     }
 
-    if (tipo.value !== 'default') {
+    if (tipo.value !== '' && tipo.value !== 'default') {
         newUrl.searchParams.set('tipo', tipo.value);
-        document.getElementById('contador').textContent = cont++;
+        x++;
     } else {
         newUrl.searchParams.delete('tipo');
     }
-    
+
     if (de.value !== '') {
         newUrl.searchParams.set('de', de.value);
-        document.getElementById('contador').textContent = cont++;
+        x++;
     } else {
         newUrl.searchParams.delete('de');
     }
-    
+
     if (ate.value !== '') {
         newUrl.searchParams.set('ate', ate.value);
-        document.getElementById('contador').textContent = cont++;
+        x++;
     } else {
         newUrl.searchParams.delete('ate');
     }
+    cont.textContent = x;
     window.history.pushState({}, '', newUrl);
 }
 
@@ -144,7 +147,7 @@ function converter(data_publicacao) {
 }
 
 function openDialog() {
-    tipo.value = "default";
+    setFilters();
     dialog.showModal();
 
     document.getElementById('cancel-dialog').textContent = "✖️";
