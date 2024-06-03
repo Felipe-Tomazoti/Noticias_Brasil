@@ -231,3 +231,27 @@ header svg {
     justify-content: center;
     align-items: center;
 }
+
+#paginacao{
+    height: 7vh;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+#paginacao::marker, #paginacao li::marker{
+    content: none;
+}
+
+.buttonClassPag{
+    width: 25px;
+    height: 30px;
+    border: 2px solid #4682b4;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #4682b4;
+    color: #f0f0f0;  
+    cursor: pointer;
+}

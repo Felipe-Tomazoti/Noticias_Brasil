@@ -1,3 +1,5 @@
+let array = [];
+let x = 0;
 const cont = document.getElementById('contador');
 const dialog = document.getElementById('dialogClass');
 const valueBusca = document.getElementById('text');
@@ -7,26 +9,32 @@ const de = document.getElementById('de');
 const ate = document.getElementById('ate');
 
 document.addEventListener("DOMContentLoaded", () => {
+    createLiPagincao();
     clickSvg();
-    console.log("teste");
     setFilters();
-    callApi();
+    const currentPage = localStorage.getItem('currentPage') || 1;
+    callApi(currentPage);
 });
 
 // FUNÇÕES
 
-// CHAMAR AS INFOS
-async function callData() {
-    const req = await fetch(`https://servicodados.ibge.gov.br/api/v3/noticias/${window.location.search}`);
+async function callData(page = 1) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const qtd = urlParams.get('qtd') || 10;
+    const busca = urlParams.get('busca') || '';
+    const tipo = urlParams.get('tipo') || 'default';
+    const de = urlParams.get('de') || '';
+    const ate = urlParams.get('ate') || '';
+
+    const req = await fetch(`https://servicodados.ibge.gov.br/api/v3/noticias/?page=${page}&qtd=${qtd}&busca=${busca}&tipo=${tipo}&de=${de}&ate=${ate}`);
     const data = await req.json();
     return data;
 }
 
-// TEM QUE RETORNAR COM A URL E OS PARAMS.
 function setFilters() {
     const newUrl = new URL(window.location);
     valueBusca.value = newUrl.searchParams.get('busca') ?? '';
-    tipo.value = newUrl.searchParams.get('tipo') ?? 'default'; 
+    tipo.value = newUrl.searchParams.get('tipo') ?? 'default';
     quantidade.value = newUrl.searchParams.get('qtd') ?? '10';
     de.value = newUrl.searchParams.get('de') ?? '';
     ate.value = newUrl.searchParams.get('ate') ?? '';
@@ -36,6 +44,7 @@ function updateURLParams() {
     let x = 1;
     const newUrl = new URL(window.location);
     newUrl.searchParams.set('qtd', quantidade.value);
+    
     if (valueBusca.value !== "") {
         newUrl.searchParams.set('busca', valueBusca.value);
     } else {
@@ -66,11 +75,11 @@ function updateURLParams() {
     window.history.pushState({}, '', newUrl);
 }
 
-//ESTRUTURA DOS CARDS
-async function callApi() {
-    const ul = document.getElementById('ulCards')
+async function callApi(page = 1) {
+    const ul = document.getElementById('ulCards');
     updateURLParams();
-    const data = await callData();
+    localStorage.setItem('currentPage', page);
+    const data = await callData(page);
     try {
         let cards = "";
 
@@ -97,7 +106,7 @@ async function callApi() {
                     <button class="buttonRelease" onclick="callLink('${link}')">Leia mais</button>
                 </div>
             </li>
-            `
+            `;
         });
         ul.innerHTML = cards;
     } catch (error) {
@@ -112,7 +121,7 @@ function callLink(link) {
 async function filtersApplication(event) {
     event.preventDefault();
     updateURLParams();
-    callApi();
+    callApi(1);
 }
 
 function clickSvg() {
@@ -154,6 +163,33 @@ function openDialog() {
     document.getElementById('cancel-dialog').addEventListener('click', function () {
         dialog.close();
     });
+}
+
+function updatePag(event, page) {
+    event.preventDefault();
+    createLiPagincao(page);
+    callApi(page);
+}
+
+function createLiPagincao(currentPage = 1) {
+    const ul = document.getElementById('paginacao');
+    ul.innerHTML = '';
+
+    let startPage = Math.max(1, currentPage - 5);
+    let endPage = startPage + 9;
+
+    for (let contador = startPage; contador <= endPage; contador++) {
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+        button.classList.add('buttonClassPag');
+        button.textContent = contador;
+        array.push(button.textContent);
+        button.addEventListener('click', (event) => {
+            updatePag(event, contador);
+        });
+        li.appendChild(button);
+        ul.appendChild(li);
+    }
 }
 
 document.getElementById('edit-form').addEventListener('submit', (event) => {
