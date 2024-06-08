@@ -61,10 +61,9 @@ header button {
 }
 
 #edit-form {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
-    justify-content: center;
     position: absolute;
     top: 45%;
     left: 40%;
@@ -168,6 +167,7 @@ header svg {
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     cursor: pointer;
+    bottom: -40px;
 }
 
 .flex {
@@ -254,4 +254,32 @@ header svg {
     background-color: #4682b4;
     color: #f0f0f0;  
     cursor: pointer;
+}
+
+@media (max-width: 760px) {
+
+    header input {
+        padding: 8px;
+        border: 1px;
+        border-radius: 10px;
+        width: 600px;
+    }
+
+    .liCards {
+        display: flex;
+        flex-direction: row;
+        max-width: 120ch;
+        padding: 20px;
+        border-bottom: 1px solid gray;
+        height: auto;
+    }
+
+    #edit-form {
+        display: grid;
+        grid-template-columns: 1fr;
+        align-items: center;
+        position: absolute;
+        top: 45%;
+        left: 40%;
+  }
 }
