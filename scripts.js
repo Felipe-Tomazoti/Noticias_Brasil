@@ -84,6 +84,7 @@ async function callApi(page = 1) {
         let cards = "";
 
         data.items.forEach(element => {
+            console.log(element)
             const titulo = element.titulo;
             const introducao = element.introducao;
             let editorias = '#' + element.editorias;
@@ -133,10 +134,17 @@ function clickSvg() {
 }
 
 function converter(data_publicacao) {
-    const [parteData, parteHora] = data_publicacao.split(' ');
-    const [dia, mes, ano] = parteData.split('/').map(Number);
-    const [horas, minutos, segundos] = parteHora.split(':').map(Number);
-    const dataPub = new Date(ano, mes - 1, dia, horas, minutos, segundos);
+    if (typeof data_publicacao !== 'string') {
+        console.error('Tipo de data_publicacao:', typeof data_publicacao);
+        throw new TypeError('data_publicacao deve ser uma string');
+    }
+
+    const dataPub = new Date(data_publicacao);
+
+    if (isNaN(dataPub)) {
+        console.error('Formato de data_publicacao inválido:', data_publicacao);
+        throw new Error('data_publicacao deve estar no formato ISO 8601');
+    }
 
     const dataAtual = new Date();
     dataAtual.setHours(0, 0, 0, 0);
@@ -155,6 +163,7 @@ function converter(data_publicacao) {
         return `Publicado há ${diferencaDias} dias`;
     }
 }
+
 
 function openDialog() {
     setFilters();
