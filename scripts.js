@@ -16,8 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     callApi(currentPage);
 });
 
-// FUNÇÕES
-
 async function callData(page = 1) {
     const urlParams = new URLSearchParams(window.location.search);
     const qtd = urlParams.get('qtd') || 10;
@@ -88,7 +86,7 @@ async function callApi(page = 1) {
             const titulo = element.titulo;
             const introducao = element.introducao;
             let editorias = '#' + element.editorias;
-            editorias = editorias.split(';').join(' #'); // Corrigido aqui
+            editorias = editorias.split(';').join(' #');
             const link = element.link;
             const img = `https://agenciadenoticias.ibge.gov.br/` + JSON.parse(element.imagens || '{"image_intro": ""}').image_intro;
             const data_publicacao = converter(element.data_publicacao);
@@ -140,11 +138,6 @@ function converter(data_publicacao) {
     }
 
     const dataPub = new Date(data_publicacao);
-
-    if (isNaN(dataPub)) {
-        console.error('Formato de data_publicacao inválido:', data_publicacao);
-        throw new Error('data_publicacao deve estar no formato ISO 8601');
-    }
 
     const dataAtual = new Date();
     dataAtual.setHours(0, 0, 0, 0);
