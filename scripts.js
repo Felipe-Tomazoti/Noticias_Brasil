@@ -82,7 +82,6 @@ async function callApi(page = 1) {
         let cards = "";
 
         data.items.forEach(element => {
-            console.log(element)
             const titulo = element.titulo;
             const introducao = element.introducao;
             let editorias = '#' + element.editorias;
@@ -137,7 +136,16 @@ function converter(data_publicacao) {
         throw new TypeError('data_publicacao deve ser uma string');
     }
 
-    const dataPub = new Date(data_publicacao);
+    const [data, hora] = data_publicacao.split(' ');
+    const [dia, mes, ano] = data.split('/');
+    const dataISO = `${ano}-${mes}-${dia}T${hora}`;
+
+    const dataPub = new Date(dataISO);
+
+    if (isNaN(dataPub.getTime())) {
+        console.error('Data inválida após conversão:', dataISO);
+        return 'Data inválida';
+    }
 
     const dataAtual = new Date();
     dataAtual.setHours(0, 0, 0, 0);
